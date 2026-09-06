@@ -1,0 +1,32 @@
+{
+  "source": "cline-extension-remote-config",
+  "version": "v1",
+  "remoteConfig": {
+    "version": "v1",
+    "providerSettings": {
+      "Cline": {}
+    },
+    "telemetryEnabled": true,
+    "kanbanEnabled": false,
+    "mcpMarketplaceEnabled": true,
+    "yoloModeAllowed": true,
+    "openTelemetryEnabled": false,
+    "openTelemetryOtlpInsecure": false,
+    "enterpriseTelemetry": {
+      "promptUploading": {}
+    }
+  },
+  "managedInstructions": [],
+  "metadata": {
+    "organizationId": "org-01KMRRJHGVCYMWNBNHXBZMK09J",
+    "paths": {
+      "pluginName": "remote-config",
+      "pluginPath": "d:\\repos\\web-llm-chat\\.cline\\remote-config",
+      "workflowsPath": "d:\\repos\\web-llm-chat\\.cline\\remote-config\\workflows",
+      "skillsPath": "d:\\repos\\web-llm-chat\\.cline\\remote-config\\skills",
+      "bundleCachePath": "d:\\repos\\web-llm-chat\\.cline\\remote-config\\cache\\bundle.json",
+      "manifestPath": "d:\\repos\\web-llm-chat\\.cline\\remote-config\\managed.json",
+      "rulesFilePath": "d:\\repos\\web-llm-chat\\.cline\\remote-config\\rules.md"
+    }
+  }
+}

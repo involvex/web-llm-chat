@@ -5,15 +5,14 @@ import RemarkBreaks from "remark-breaks";
 import RehypeKatex from "rehype-katex";
 import RemarkGfm from "remark-gfm";
 import RehypeHighlight from "rehype-highlight";
-import { useRef, useState, RefObject, useEffect, useMemo } from "react";
+import React, { useRef, useState, RefObject, useEffect, useMemo } from "react";
 import { copyToClipboard } from "../utils";
 import mermaid from "mermaid";
 
 import LoadingIcon from "../icons/three-dots.svg";
-import React from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { showImageModal } from "./ui-lib";
-import { PluggableList } from "react-markdown/lib";
+import type { PluggableList } from "unified";
 
 export function Mermaid(props: { code: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -135,7 +134,7 @@ function escapeBrackets(text: string) {
   );
 }
 
-function _MarkDownContent(props: { content: string }) {
+function MarkdownContentInner(props: { content: string }) {
   const escapedContent = useMemo(() => {
     return escapeBrackets(escapeDollarNumber(props.content));
   }, [props.content]);
@@ -161,7 +160,7 @@ function _MarkDownContent(props: { content: string }) {
         a: (aProps) => {
           const href = aProps.href || "";
           const isInternal = /^\/#/i.test(href);
-          const target = isInternal ? "_self" : aProps.target ?? "_blank";
+          const target = isInternal ? "_self" : (aProps.target ?? "_blank");
           return <a {...aProps} target={target} />;
         },
       }}
@@ -171,7 +170,7 @@ function _MarkDownContent(props: { content: string }) {
   );
 }
 
-export const MarkdownContent = React.memo(_MarkDownContent);
+export const MarkdownContent = React.memo(MarkdownContentInner);
 
 export function Markdown(
   props: {
