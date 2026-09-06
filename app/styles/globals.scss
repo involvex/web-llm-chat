@@ -1,5 +1,5 @@
-@import "./animation.scss";
-@import "./window.scss";
+@use "./animation" as *;
+@use "./window" as *;
 
 @mixin light {
   --theme: light;
@@ -45,11 +45,10 @@
 
   --theme-color: var(--gray);
 
-  div:not(.no-dark)>svg {
+  div:not(.no-dark) > svg {
     filter: invert(0.5);
   }
 }
-
 
 .light {
   @include light;
@@ -97,8 +96,9 @@
 html {
   height: var(--full-height);
 
-  font-family: "Noto Sans", "SF Pro SC", "SF Pro Text", "SF Pro Icons",
-    "PingFang SC", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-family:
+    "Noto Sans", "SF Pro SC", "SF Pro Text", "SF Pro Icons", "PingFang SC",
+    "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 }
 
 body {

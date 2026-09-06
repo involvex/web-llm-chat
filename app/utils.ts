@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { showToast } from "./components/ui-lib";
 import Locale from "./locales";
 import { RequestMessage } from "./client/api";
-import { Model } from "./store";
+import { Model } from "./store/config";
 import { ModelType, prebuiltAppConfig } from "@mlc-ai/web-llm";
 import { ChatImage } from "./typing";
 
@@ -68,7 +68,7 @@ export function compressImage(file: File, maxSize: number): Promise<ChatImage> {
         let width = image.width;
         let height = image.height;
         let quality = 0.9;
-        let dataUrl;
+        let dataUrl: string;
 
         do {
           canvas.width = width;
@@ -129,9 +129,17 @@ export function isIOS() {
 }
 
 export function useWindowSize() {
-  const [size, setSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
+  const [size, setSize] = useState(() => {
+    if (typeof window !== "undefined") {
+      return {
+        width: window.innerWidth,
+        height: window.innerHeight,
+      };
+    }
+    return {
+      width: 0,
+      height: 0,
+    };
   });
 
   useEffect(() => {
@@ -281,24 +289,4 @@ export function fixMessage(message: string) {
   message = message.replace(/(<human\s*)+$/, "");
 
   return message;
-}
-
-// Get model size from model id
-export function getSize(model_id: string): string | undefined {
-  const sizeRegex = /-(\d+(\.\d+)?[BK])-?/;
-  const match = model_id.match(sizeRegex);
-  if (match) {
-    return match[1];
-  }
-  return undefined;
-}
-
-// Get quantization method from model id
-export function getQuantization(model_id: string): string | undefined {
-  const quantizationRegex = /-(q[0-9]f[0-9]+(?:_[0-9])?)-/;
-  const match = model_id.match(quantizationRegex);
-  if (match) {
-    return match[1];
-  }
-  return undefined;
 }

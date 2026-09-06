@@ -1,6 +1,5 @@
 import { prebuiltAppConfig } from "@mlc-ai/web-llm";
 import { ModelRecord } from "./client/api";
-import { getQuantization, getSize } from "./utils";
 
 export const OWNER = "mlc-ai";
 export const REPO = "web-llm-chat";
@@ -75,6 +74,7 @@ export enum ModelFamily {
   SMOL_LM = "smollm",
   WIZARD_MATH = "wizardmath",
   STABLE_LM = "stablelm",
+  OLMO = "olmo",
   REDPAJAMA = "redpajama",
   DEEPSEEK = "DeepSeek",
 }
@@ -1531,7 +1531,437 @@ const DEFAULT_MODEL_BASES: ModelRecord[] = [
       top_p: 0.95,
     },
   },
+
+  // New models added to sync with web-llm prebuiltAppConfig
+  {
+    name: "Hermes-2-Theta-Llama-3-8B-q4f16_1-MLC",
+    display_name: "Hermes",
+    provider: "NousResearch",
+    family: ModelFamily.LLAMA,
+    recommended_config: {
+      temperature: 1,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 1,
+    },
+  },
+  {
+    name: "Hermes-2-Theta-Llama-3-8B-q4f32_1-MLC",
+    display_name: "Hermes",
+    provider: "NousResearch",
+    family: ModelFamily.LLAMA,
+    recommended_config: {
+      temperature: 1,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 1,
+    },
+  },
+  {
+    name: "Phi-4-mini-instruct-q4f16_1-MLC",
+    display_name: "Phi",
+    provider: "Microsoft",
+    family: ModelFamily.PHI,
+    recommended_config: {
+      temperature: 1,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 1,
+    },
+  },
+  {
+    name: "Phi-4-mini-instruct-q4f32_1-MLC",
+    display_name: "Phi",
+    provider: "Microsoft",
+    family: ModelFamily.PHI,
+    recommended_config: {
+      temperature: 1,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 1,
+    },
+  },
+  {
+    name: "Ministral-3-3B-Base-2512-q4f16_1-MLC",
+    display_name: "Ministral",
+    provider: "Mistral AI",
+    family: ModelFamily.MISTRAL,
+    recommended_config: {
+      temperature: 1,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 1,
+    },
+  },
+  {
+    name: "Ministral-3-3B-Base-2512-q4f32_1-MLC",
+    display_name: "Ministral",
+    provider: "Mistral AI",
+    family: ModelFamily.MISTRAL,
+    recommended_config: {
+      temperature: 1,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 1,
+    },
+  },
+  {
+    name: "Ministral-3-3B-Reasoning-2512-q4f16_1-MLC",
+    display_name: "Ministral",
+    provider: "Mistral AI",
+    family: ModelFamily.MISTRAL,
+    recommended_config: {
+      temperature: 1,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 1,
+    },
+  },
+  {
+    name: "Ministral-3-3B-Reasoning-2512-q4f32_1-MLC",
+    display_name: "Ministral",
+    provider: "Mistral AI",
+    family: ModelFamily.MISTRAL,
+    recommended_config: {
+      temperature: 1,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 1,
+    },
+  },
+  {
+    name: "Ministral-3-3B-Instruct-2512-BF16-q4f16_1-MLC",
+    display_name: "Ministral",
+    provider: "Mistral AI",
+    family: ModelFamily.MISTRAL,
+    recommended_config: {
+      temperature: 1,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 1,
+    },
+  },
+  {
+    name: "Ministral-3-3B-Instruct-2512-BF16-q4f32_1-MLC",
+    display_name: "Ministral",
+    provider: "Mistral AI",
+    family: ModelFamily.MISTRAL,
+    recommended_config: {
+      temperature: 1,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 1,
+    },
+  },
+  {
+    name: "Qwen3.5-0.8B-q4f16_1-MLC",
+    display_name: "Qwen",
+    provider: "Alibaba",
+    family: ModelFamily.QWEN,
+    recommended_config: {
+      temperature: 0.7,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 0.8,
+    },
+  },
+  {
+    name: "Qwen3.5-0.8B-q4f32_1-MLC",
+    display_name: "Qwen",
+    provider: "Alibaba",
+    family: ModelFamily.QWEN,
+    recommended_config: {
+      temperature: 0.7,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 0.8,
+    },
+  },
+  {
+    name: "Qwen3.5-0.8B-q0f16-MLC",
+    display_name: "Qwen",
+    provider: "Alibaba",
+    family: ModelFamily.QWEN,
+    recommended_config: {
+      temperature: 0.7,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 0.8,
+    },
+  },
+  {
+    name: "Qwen3.5-2B-q4f16_1-MLC",
+    display_name: "Qwen",
+    provider: "Alibaba",
+    family: ModelFamily.QWEN,
+    recommended_config: {
+      temperature: 0.7,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 0.8,
+    },
+  },
+  {
+    name: "Qwen3.5-2B-q4f32_1-MLC",
+    display_name: "Qwen",
+    provider: "Alibaba",
+    family: ModelFamily.QWEN,
+    recommended_config: {
+      temperature: 0.7,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 0.8,
+    },
+  },
+  {
+    name: "Qwen3.5-4B-q4f16_1-MLC",
+    display_name: "Qwen",
+    provider: "Alibaba",
+    family: ModelFamily.QWEN,
+    recommended_config: {
+      temperature: 0.7,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 0.8,
+    },
+  },
+  {
+    name: "Qwen3.5-4B-q4f32_1-MLC",
+    display_name: "Qwen",
+    provider: "Alibaba",
+    family: ModelFamily.QWEN,
+    recommended_config: {
+      temperature: 0.7,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 0.8,
+    },
+  },
+  {
+    name: "Qwen3.5-9B-q4f16_1-MLC",
+    display_name: "Qwen",
+    provider: "Alibaba",
+    family: ModelFamily.QWEN,
+    recommended_config: {
+      temperature: 0.7,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 0.8,
+    },
+  },
+  {
+    name: "Qwen3.5-9B-q4f32_1-MLC",
+    display_name: "Qwen",
+    provider: "Alibaba",
+    family: ModelFamily.QWEN,
+    recommended_config: {
+      temperature: 0.7,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 0.8,
+    },
+  },
+  {
+    name: "Qwen2.5-Math-1.5B-Instruct-q4f16_1-MLC",
+    display_name: "Qwen",
+    provider: "Alibaba",
+    family: ModelFamily.QWEN,
+    recommended_config: {
+      temperature: 1,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 0.8,
+    },
+  },
+  {
+    name: "Qwen2.5-Math-1.5B-Instruct-q4f32_1-MLC",
+    display_name: "Qwen",
+    provider: "Alibaba",
+    family: ModelFamily.QWEN,
+    recommended_config: {
+      temperature: 1,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 0.8,
+    },
+  },
+  {
+    name: "gemma-2b-it-q4f16_1-MLC",
+    display_name: "Gemma",
+    provider: "Google",
+    family: ModelFamily.GEMMA,
+    recommended_config: {
+      temperature: 0.7,
+      presence_penalty: 0,
+      frequency_penalty: 1,
+      top_p: 0.95,
+    },
+  },
+  {
+    name: "gemma-2b-it-q4f32_1-MLC",
+    display_name: "Gemma",
+    provider: "Google",
+    family: ModelFamily.GEMMA,
+    recommended_config: {
+      temperature: 0.7,
+      presence_penalty: 0,
+      frequency_penalty: 1,
+      top_p: 0.95,
+    },
+  },
+  {
+    name: "gemma-2b-it-q4f16_1-MLC-1k",
+    display_name: "Gemma",
+    provider: "Google",
+    family: ModelFamily.GEMMA,
+    recommended_config: {
+      temperature: 0.7,
+      presence_penalty: 0,
+      frequency_penalty: 1,
+      top_p: 0.95,
+    },
+  },
+  {
+    name: "gemma-2b-it-q4f32_1-MLC-1k",
+    display_name: "Gemma",
+    provider: "Google",
+    family: ModelFamily.GEMMA,
+    recommended_config: {
+      temperature: 0.7,
+      presence_penalty: 0,
+      frequency_penalty: 1,
+      top_p: 0.95,
+    },
+  },
+  {
+    name: "gemma3-1b-it-q4f16_1-MLC",
+    display_name: "Gemma",
+    provider: "Google",
+    family: ModelFamily.GEMMA,
+    recommended_config: {
+      temperature: 0.7,
+      presence_penalty: 0,
+      frequency_penalty: 1,
+      top_p: 0.95,
+    },
+  },
+  {
+    name: "OLMo-2-1124-7B-Instruct-q4f16_1-MLC",
+    display_name: "OLMo",
+    provider: "AI2",
+    family: ModelFamily.OLMO,
+    recommended_config: {
+      temperature: 1,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 1,
+    },
+  },
+  {
+    name: "OLMo-2-1124-7B-Instruct-q4f32_1-MLC",
+    display_name: "OLMo",
+    provider: "AI2",
+    family: ModelFamily.OLMO,
+    recommended_config: {
+      temperature: 1,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 1,
+    },
+  },
+  {
+    name: "OLMo-2-0425-1B-Instruct-q4f16_1-MLC",
+    display_name: "OLMo",
+    provider: "AI2",
+    family: ModelFamily.OLMO,
+    recommended_config: {
+      temperature: 1,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 1,
+    },
+  },
+  {
+    name: "OLMo-2-0425-1B-Instruct-q4f32_1-MLC",
+    display_name: "OLMo",
+    provider: "AI2",
+    family: ModelFamily.OLMO,
+    recommended_config: {
+      temperature: 1,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 1,
+    },
+  },
+  {
+    name: "snowflake-arctic-embed-m-q0f32-MLC-b32",
+    display_name: "Snowflake Arctic",
+    provider: "Snowflake",
+    family: ModelFamily.LLAMA,
+    recommended_config: {
+      temperature: 0.7,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 0.95,
+    },
+  },
+  {
+    name: "snowflake-arctic-embed-m-q0f32-MLC-b4",
+    display_name: "Snowflake Arctic",
+    provider: "Snowflake",
+    family: ModelFamily.LLAMA,
+    recommended_config: {
+      temperature: 0.7,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 0.95,
+    },
+  },
+  {
+    name: "snowflake-arctic-embed-s-q0f32-MLC-b32",
+    display_name: "Snowflake Arctic",
+    provider: "Snowflake",
+    family: ModelFamily.LLAMA,
+    recommended_config: {
+      temperature: 0.7,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 0.95,
+    },
+  },
+  {
+    name: "snowflake-arctic-embed-s-q0f32-MLC-b4",
+    display_name: "Snowflake Arctic",
+    provider: "Snowflake",
+    family: ModelFamily.LLAMA,
+    recommended_config: {
+      temperature: 0.7,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      top_p: 0.95,
+    },
+  },
 ];
+
+// Get model size from model id
+function getSize(model_id: string): string | undefined {
+  const sizeRegex = /-(\d+(\.\d+)?[BK])-?/;
+  const match = model_id.match(sizeRegex);
+  if (match) {
+    return match[1];
+  }
+  return undefined;
+}
+
+// Get quantization method from model id
+function getQuantization(model_id: string): string | undefined {
+  const quantizationRegex = /-(q[0-9]f[0-9]+(?:_[0-9])?)-/;
+  const match = model_id.match(quantizationRegex);
+  if (match) {
+    return match[1];
+  }
+  return undefined;
+}
 
 export const DEFAULT_MODELS: ModelRecord[] = DEFAULT_MODEL_BASES.filter(
   (model) => {

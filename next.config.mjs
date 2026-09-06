@@ -1,4 +1,4 @@
-import withSerwistInit from "@serwist/next";
+import { withSerwist } from "@serwist/turbopack";
 
 const mode = process.env.BUILD_MODE ?? "export";
 console.log("[Next] build mode", mode);
@@ -23,34 +23,18 @@ const cspHeader = `
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  webpack(config, { isServer }) {
+  output: mode,
+  images: {
+    unoptimized: mode === "export",
+  },
+  turbopack: {},
+  webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
       use: ["@svgr/webpack"],
     });
 
-    config.resolve.fallback = {
-      child_process: false,
-    };
-
-    if (!isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback, // if you miss it, all the other options in fallback, specified
-        // by next.js will be dropped. Doesn't make much sense, but how it is
-        fs: false, // the solution
-        module: false,
-        perf_hooks: false,
-      };
-    }
-
     return config;
-  },
-  output: mode,
-  images: {
-    unoptimized: mode === "export",
-  },
-  experimental: {
-    forceSwcTransforms: true,
   },
 };
 
@@ -95,7 +79,4 @@ if (mode !== "export") {
   };
 }
 
-export default withSerwistInit({
-  swSrc: "app/worker/service-worker.ts",
-  swDest: "public/sw.js",
-})(nextConfig);
+export default withSerwist(nextConfig);

@@ -7,12 +7,7 @@ import styles from "./home.module.scss";
 import log from "loglevel";
 import dynamic from "next/dynamic";
 import { useState, useEffect, useRef } from "react";
-import {
-  HashRouter as Router,
-  Routes,
-  Route,
-  useLocation,
-} from "react-router-dom";
+import { usePathname } from "../router";
 import { ServiceWorkerMLCEngine } from "@mlc-ai/web-llm";
 
 import MlcIcon from "../icons/mlc.svg";
@@ -127,8 +122,8 @@ const loadAsyncFonts = () => {
 
 function Screen() {
   const config = useAppConfig();
-  const location = useLocation();
-  const isHome = location.pathname === Path.Home;
+  const pathname = usePathname();
+  const isHome = pathname === Path.Home;
   const isMobileScreen = useMobileScreen();
   const shouldTightBorder = config.tightBorder && !isMobileScreen;
 
@@ -149,12 +144,9 @@ function Screen() {
         <SideBar className={isHome ? styles["sidebar-show"] : ""} />
 
         <div className={styles["window-content"]} id={SlotID.AppBody}>
-          <Routes>
-            <Route path={Path.Home} element={<Chat />} />
-            <Route path={Path.Templates} element={<TemplatePage />} />
-            <Route path={Path.Chat} element={<Chat />} />
-            <Route path={Path.Settings} element={<Settings />} />
-          </Routes>
+          {pathname === Path.Templates && <TemplatePage />}
+          {pathname === Path.Settings && <Settings />}
+          {(pathname === Path.Home || pathname === Path.Chat) && <Chat />}
         </div>
       </>
     </div>
@@ -245,7 +237,8 @@ const useWebLLM = () => {
         // 10s per heartbeat, dead after 30 seconds of inactivity
         setWebllmAlive(
           !!webllm.webllm.engine &&
-            (webllm.webllm.engine as ServiceWorkerMLCEngine).missedHeatbeat < 3,
+            (webllm.webllm.engine as ServiceWorkerMLCEngine).missedHeartbeat <
+              3,
         );
       }
     }, 10_000);
@@ -357,13 +350,11 @@ export function Home() {
 
   return (
     <ErrorBoundary>
-      <Router>
-        <WebLLMContext.Provider value={webllm}>
-          <MLCLLMContext.Provider value={mlcllm}>
-            <Screen />
-          </MLCLLMContext.Provider>
-        </WebLLMContext.Provider>
-      </Router>
+      <WebLLMContext.Provider value={webllm}>
+        <MLCLLMContext.Provider value={mlcllm}>
+          <Screen />
+        </MLCLLMContext.Provider>
+      </WebLLMContext.Provider>
     </ErrorBoundary>
   );
 }

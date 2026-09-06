@@ -1,5 +1,5 @@
 import { ServiceWorkerMLCEngineHandler } from "@mlc-ai/web-llm";
-import { defaultCache } from "@serwist/next/worker";
+import { defaultCache } from "@serwist/turbopack/worker";
 import type { PrecacheEntry, SerwistGlobalConfig } from "serwist";
 import { CacheFirst, ExpirationPlugin, Serwist } from "serwist";
 

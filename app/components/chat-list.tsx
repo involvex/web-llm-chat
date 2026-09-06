@@ -12,7 +12,7 @@ import {
 import { useAppConfig, useChatStore } from "../store";
 
 import Locale from "../locales";
-import { useLocation, useNavigate } from "react-router-dom";
+import { usePathname, useNavigate } from "../router";
 import { Path } from "../constant";
 import { TemplateAvatar } from "./template";
 import { Template } from "../store/template";
@@ -42,7 +42,7 @@ export function ChatItem(props: {
     }
   }, [props.selected]);
 
-  const { pathname: currentPath } = useLocation();
+  const currentPath = usePathname();
   return (
     <Draggable draggableId={`${props.id}`} index={props.index}>
       {(provided) => (

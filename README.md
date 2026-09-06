@@ -47,11 +47,11 @@ WebLLM Chat supports custom language models through [MLC-LLM](https://llm.mlc.ai
 ## Development
 
 ```shell
-# 1. install nodejs and yarn first
+# 1. install bun first
 # 2. config local env vars in `.env.local`
 # 3. run
-yarn install
-yarn dev
+bun install
+bun run dev
 ```
 
 ## Deployment

@@ -1,29 +1,27 @@
-FROM node:18-alpine AS base
+FROM oven/bun:1 AS base
 
 FROM base AS deps
 
-RUN apk add --no-cache libc6-compat
-
 WORKDIR /app
 
-COPY package.json yarn.lock ./
+COPY package.json bun.lock ./
 
-RUN yarn install
+RUN bun install --frozen-lockfile
 
 FROM base AS builder
 
-RUN apk update && apk add --no-cache git
+RUN apt-get update && apt-get install -y --no-cache git
 
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-RUN yarn build
+RUN bun run build
 
 FROM base AS runner
 WORKDIR /app
 
-RUN apk add proxychains-ng
+RUN apt-get update && apt-get install -y --no-cache proxychains4
 
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
@@ -48,7 +46,7 @@ CMD if [ -n "$PROXY_URL" ]; then \
     echo "[ProxyList]" >> $conf; \
     echo "$protocol $host $port" >> $conf; \
     cat /etc/proxychains.conf; \
-    proxychains -f $conf node server.js; \
+    proxychains -f $conf bun run server.js; \
     else \
-    node server.js; \
+    bun run server.js; \
     fi

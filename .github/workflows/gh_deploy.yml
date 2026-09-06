@@ -29,31 +29,28 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Setup Bun
+        uses: oven-bun/setup-bun@v1
         with:
-          node-version: "lts/*"
-          cache: yarn
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
+          bun-version: latest
 
       - name: Restore cache
         uses: actions/cache@v4
         with:
           path: |
             .next/cache
+            node_modules
           # Generate a new cache whenever packages or source files change.
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb', '**/package.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           # If source files changed but packages didn't, rebuild from a prior cache.
           restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
+            ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb', '**/package.json') }}-
 
       - name: Install dependencies
-        run: yarn install
+        run: bun install
 
       - name: Build with Next.js
-        run: yarn export
+        run: bun run export
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

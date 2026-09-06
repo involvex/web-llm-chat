@@ -38,7 +38,7 @@ import {
 } from "./ui-lib";
 import { Avatar, AvatarPicker } from "./emoji";
 import Locale from "../locales";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "../router";
 
 import chatStyle from "./chat.module.scss";
 import { useState } from "react";

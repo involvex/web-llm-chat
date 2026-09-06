@@ -3,7 +3,18 @@ import "./styles/globals.scss";
 import "./styles/markdown.scss";
 import "./styles/highlight.scss";
 import { getClientConfig } from "./config/client";
-import { type Metadata } from "next";
+import { type Metadata, Viewport } from "next";
+import { SerwistProvider } from "@serwist/turbopack/react";
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fafafa" },
+    { media: "(prefers-color-scheme: dark)", color: "#151515" },
+  ],
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://chat.webllm.ai"),
@@ -22,15 +33,6 @@ export const metadata: Metadata = {
   publisher: "WebLLM",
   creator: "WebLLM",
   robots: "index, follow",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-  },
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fafafa" },
-    { media: "(prefers-color-scheme: dark)", color: "#151515" },
-  ],
   appleWebApp: {
     title: "WebLLM Chat",
     statusBarStyle: "default",
@@ -142,7 +144,9 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <SerwistProvider swUrl="/serwist/sw.js">{children}</SerwistProvider>
+      </body>
     </html>
   );
 }
