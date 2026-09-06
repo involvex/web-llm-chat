@@ -299,6 +299,7 @@ export function PromptHints(props: {
   const selectedRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSelectIndex(0);
   }, [props.prompts.length]);
 
@@ -493,16 +494,10 @@ export function ChatActions(props: {
   const currentModel = config.modelConfig.model;
   const models = config.models;
   const [showModelSelector, setShowModelSelector] = useState(false);
-  const [showUploadImage, setShowUploadImage] = useState(false);
-
-  useEffect(() => {
-    const show = isVisionModel(currentModel);
-    setShowUploadImage(show);
-    if (!show) {
-      props.setAttachImages([]);
-      props.setUploading(false);
-    }
-  }, [chatStore, currentModel, models]);
+  const showUploadImage = useMemo(
+    () => isVisionModel(currentModel),
+    [currentModel],
+  );
 
   return (
     <div className={styles["chat-input-actions"]}>
@@ -579,7 +574,7 @@ export function DeleteImageButton(props: { deleteImage: () => void }) {
   );
 }
 
-function _Chat() {
+function ChatInner() {
   type RenderMessage = ChatMessage & { preview?: boolean };
 
   const chatStore = useChatStore();
@@ -595,12 +590,14 @@ function _Chat() {
   const [userInput, setUserInput] = useState("");
   const { submitKey, shouldSubmit } = useSubmitHandler();
   const scrollRef = useRef<HTMLDivElement>(null);
+  /* eslint-disable react-hooks/refs */
   const isScrolledToBottom = scrollRef?.current
     ? Math.abs(
         scrollRef.current.scrollHeight -
           (scrollRef.current.scrollTop + scrollRef.current.clientHeight),
       ) <= 1
     : false;
+  /* eslint-enable react-hooks/refs */
   const { setAutoScroll, scrollDomToBottom } = useScrollToBottom(
     scrollRef,
     isScrolledToBottom,
@@ -730,6 +727,7 @@ function _Chat() {
   };
 
   // Reset session status on initial loading
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     chatStore.resetGeneratingStatus();
   }, []);
@@ -755,8 +753,8 @@ function _Chat() {
       });
       session.messages = session.messages.filter((m) => m.content.length > 0);
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   // check if should send message
   const onInputKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -879,13 +877,7 @@ function _Chat() {
           ]
         : [],
     );
-  }, [
-    config.sendPreviewBubble,
-    context,
-    session.messages,
-    session.messages.length,
-    userInput,
-  ]);
+  }, [config.sendPreviewBubble, context, session.messages, userInput]);
 
   const [msgRenderIndex, _setMsgRenderIndex] = useState(
     Math.max(0, renderMessages.length - CHAT_PAGE_SIZE),
@@ -952,6 +944,7 @@ function _Chat() {
     const key = UNFINISHED_INPUT(session.id);
     const mayBeUnfinishedInput = localStorage.getItem(key);
     if (mayBeUnfinishedInput && userInput.length === 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setUserInput(mayBeUnfinishedInput);
       localStorage.removeItem(key);
     }
@@ -1004,7 +997,8 @@ function _Chat() {
         }
       }
     },
-    [attachImages, chatStore],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [attachImages, chatStore, config.modelConfig.model],
   );
 
   async function uploadImage() {
@@ -1476,5 +1470,5 @@ function _Chat() {
 export function Chat() {
   const chatStore = useChatStore();
   const sessionIndex = chatStore.currentSessionIndex;
-  return <_Chat key={sessionIndex}></_Chat>;
+  return <ChatInner key={sessionIndex}></ChatInner>;
 }

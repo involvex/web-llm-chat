@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useMemo } from "react";
 import log from "loglevel";
 
 import styles from "./settings.module.scss";
@@ -93,17 +93,12 @@ function UserPromptModal(props: { onClose?: () => void }) {
   const allPrompts = userPrompts.concat(builtinPrompts);
   const [searchInput, setSearchInput] = useState("");
   const [searchPrompts, setSearchPrompts] = useState<Prompt[]>([]);
-  const prompts = searchInput.length > 0 ? searchPrompts : allPrompts;
-
   const [editingPromptId, setEditingPromptId] = useState<string>();
-
-  useEffect(() => {
+  const prompts = useMemo(() => {
     if (searchInput.length > 0) {
-      const searchResult = SearchService.search(searchInput);
-      setSearchPrompts(searchResult);
-    } else {
-      setSearchPrompts([]);
+      return SearchService.search(searchInput);
     }
+    return [];
   }, [searchInput]);
 
   return (

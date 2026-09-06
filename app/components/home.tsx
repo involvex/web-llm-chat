@@ -107,6 +107,8 @@ const useHasHydrated = () => {
   const [hasHydrated, setHasHydrated] = useState<boolean>(false);
 
   useEffect(() => {
+    // This is a standard hydration pattern: mark client hydration complete after mount.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setHasHydrated(true);
   }, []);
 
@@ -159,19 +161,43 @@ const useWebLLM = () => {
   const [isWebllmActive, setWebllmAlive] = useState(false);
 
   const isWebllmInitialized = useRef(false);
+  const webllmRef = useRef(webllm);
+  const isWebllmActiveRef = useRef(isWebllmActive);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+
+  useEffect(() => {
+    webllmRef.current = webllm;
+  }, [webllm]);
+
+  useEffect(() => {
+    isWebllmActiveRef.current = isWebllmActive;
+  }, [isWebllmActive]);
 
   // If service worker registration timeout, fall back to web worker
-  const timeout = setTimeout(() => {
-    if (!isWebllmInitialized.current && !isWebllmActive && !webllm) {
-      log.info(
-        "Service Worker activation is timed out. Falling back to use web worker.",
-      );
-      setWebLLM(new WebLLMApi("webWorker", config.logLevel));
-      setWebllmAlive(true);
-    }
-  }, 2_000);
+  useEffect(() => {
+    timeoutRef.current = setTimeout(() => {
+      if (
+        !isWebllmInitialized.current &&
+        !isWebllmActiveRef.current &&
+        !webllmRef.current
+      ) {
+        log.info(
+          "Service Worker activation is timed out. Falling back to use web worker.",
+        );
+        setWebLLM(new WebLLMApi("webWorker", config.logLevel));
+        setWebllmAlive(true);
+      }
+    }, 2_000);
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [config.logLevel]);
 
   // Initialize WebLLM engine
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if ("serviceWorker" in navigator) {
       log.info("Service Worker API is available and in use.");
@@ -206,7 +232,7 @@ const useWebLLM = () => {
               );
               setWebllmAlive(true);
               isWebllmInitialized.current = true;
-              clearTimeout(timeout);
+              clearTimeout(timeoutRef.current);
             }
             navigator.serviceWorker.removeEventListener(
               "message",
@@ -224,10 +250,11 @@ const useWebLLM = () => {
       log.info(
         "Service Worker API is unavailable. Falling back to use web worker.",
       );
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setWebLLM(new WebLLMApi("webWorker", config.logLevel));
       setWebllmAlive(true);
       isWebllmInitialized.current = true;
-      clearTimeout(timeout);
+      clearTimeout(timeoutRef.current);
     }
   }, []);
 
@@ -251,6 +278,7 @@ const useMlcLLM = () => {
   const [mlcllm, setMlcLlm] = useState<MlcLLMApi | undefined>(undefined);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMlcLlm(new MlcLLMApi(config.modelConfig.mlc_endpoint));
   }, [config.modelConfig.mlc_endpoint, setMlcLlm]);
 

@@ -411,7 +411,9 @@ export function ImagePreviewer(props: {
             <div className={styles["chat-info-item"]}>
               {Locale.Exporter.Time}:{" "}
               {new Date(
-                props.messages.at(-1)?.date ?? Date.now(),
+                props.messages.at(-1)?.date ??
+                  // eslint-disable-next-line react-hooks/purity
+                  Date.now(),
               ).toLocaleString()}
             </div>
           </div>

@@ -30,7 +30,6 @@ export function Mermaid(props: { code: string }) {
           console.error("[Mermaid] ", e.message);
         });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.code]);
 
   function viewSvgInNewWindow() {
@@ -62,7 +61,6 @@ export function Mermaid(props: { code: string }) {
 
 export const PreCode = (props: { children: any }) => {
   const ref = useRef<HTMLPreElement>(null);
-  const refText = ref.current?.innerText;
   const [mermaidCode, setMermaidCode] = useState("");
 
   const renderMermaid = useDebouncedCallback(() => {
@@ -75,8 +73,7 @@ export const PreCode = (props: { children: any }) => {
 
   useEffect(() => {
     setTimeout(renderMermaid, 1);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refText]);
+  }, [renderMermaid]);
 
   return (
     <>

@@ -63,6 +63,7 @@ function useDragSideBar() {
   const config = useAppConfig();
   const startX = useRef(0);
   const startDragWidth = useRef(config.sidebarWidth ?? DEFAULT_SIDEBAR_WIDTH);
+  // eslint-disable-next-line react-hooks/purity
   const lastUpdateTime = useRef(Date.now());
 
   const toggleSideBar = () => {
