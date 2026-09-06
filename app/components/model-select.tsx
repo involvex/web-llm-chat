@@ -16,6 +16,7 @@ import Locale from "../locales";
 import { IconButton } from "./button";
 import { ModelFamily } from "../constant";
 import { Model, useAppConfig } from "../store";
+import { ModelRecord } from "../client/api";
 
 export interface ModelSearchProps {
   onClose: () => void;
@@ -63,6 +64,37 @@ const SearchInput: React.FC<SearchInputProps> = ({
   );
 };
 
+const identifyModelFamily = (
+  model: Model,
+  models: ModelRecord[],
+): ModelFamily | null => {
+  return models.find((m) => m.name === model)?.family || null;
+};
+
+const extractModelDetails = (model: string) => {
+  const parts = model.split("-");
+  const displayName: string[] = [];
+  const quantBadges: string[] = [];
+  let isBadge = false;
+
+  for (let i = 0; i < parts.length; i++) {
+    const part = parts[i];
+    if (isBadge || part.startsWith("q") || part.startsWith("b")) {
+      isBadge = true;
+      if (part !== "MLC") {
+        quantBadges.push(part);
+      }
+    } else {
+      displayName.push(part);
+    }
+  }
+
+  return {
+    displayName: displayName.join(" "),
+    quantBadge: quantBadges.length > 0 ? quantBadges.join("-") : null,
+  };
+};
+
 const ModelSelect: React.FC<ModelSearchProps> = ({
   onClose,
   availableModels,
@@ -74,44 +106,16 @@ const ModelSelect: React.FC<ModelSearchProps> = ({
   const [expandedModels, setExpandedModels] = useState<Set<string>>(new Set());
 
   const determineModelIcon = (model: Model) => {
-    const modelFamily = identifyModelFamily(model);
+    const modelFamily = identifyModelFamily(model, config.models);
     const modelDetail = modelDetailsList.find(
       (md) => modelFamily && modelFamily === md.family,
     );
-    console.log(model, modelFamily, modelDetail);
+    console.log(model, modelDetail);
     return (
       <div className={style["model-icon"]}>
         {modelDetail?.icon ? <modelDetail.icon /> : <Cpu />}
       </div>
     );
-  };
-
-  const identifyModelFamily = (model: Model): ModelFamily | null => {
-    return config.models.find((m) => m.name === model)?.family || null;
-  };
-
-  const extractModelDetails = (model: string) => {
-    const parts = model.split("-");
-    const displayName: string[] = [];
-    const quantBadges: string[] = [];
-    let isBadge = false;
-
-    for (let i = 0; i < parts.length; i++) {
-      const part = parts[i];
-      if (isBadge || part.startsWith("q") || part.startsWith("b")) {
-        isBadge = true;
-        if (part !== "MLC") {
-          quantBadges.push(part);
-        }
-      } else {
-        displayName.push(part);
-      }
-    }
-
-    return {
-      displayName: displayName.join(" "),
-      quantBadge: quantBadges.length > 0 ? quantBadges.join("-") : null,
-    };
   };
 
   const sortAndGroupModels = useCallback(
@@ -120,7 +124,7 @@ const ModelSelect: React.FC<ModelSearchProps> = ({
 
       for (const model of models) {
         const { displayName } = extractModelDetails(model);
-        const family = identifyModelFamily(model);
+        const family = identifyModelFamily(model, config.models);
 
         if (family) {
           if (!groupedModels[displayName]) {
@@ -136,14 +140,15 @@ const ModelSelect: React.FC<ModelSearchProps> = ({
 
       return Object.entries(groupedModels).sort(
         ([, aVariants], [, bVariants]) => {
-          const familyA = identifyModelFamily(aVariants[0]) || "";
-          const familyB = identifyModelFamily(bVariants[0]) || "";
+          const familyA =
+            identifyModelFamily(aVariants[0], config.models) || "";
+          const familyB =
+            identifyModelFamily(bVariants[0], config.models) || "";
           return familyA.localeCompare(familyB);
         },
       );
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    [config.models],
   );
 
   const handleToggleExpand = (modelName: string) => {
@@ -174,14 +179,19 @@ const ModelSelect: React.FC<ModelSearchProps> = ({
 
     if (selectedFamilies.length > 0) {
       filtered = filtered.filter(([, variants]) => {
-        const family = identifyModelFamily(variants[0]);
+        const family = identifyModelFamily(variants[0], config.models);
         return family && selectedFamilies.includes(family);
       });
     }
 
     return filtered;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchTerm, availableModels, selectedFamilies, sortAndGroupModels]);
+  }, [
+    searchTerm,
+    availableModels,
+    selectedFamilies,
+    sortAndGroupModels,
+    config.models,
+  ]);
 
   const handleToggleFamilyFilter = (family: string) => {
     setSelectedFamilies((prev) =>
@@ -204,7 +214,7 @@ const ModelSelect: React.FC<ModelSearchProps> = ({
   ): { [key: string]: number } => {
     const counts: { [key: string]: number } = {};
     for (const model of models) {
-      const family = identifyModelFamily(model);
+      const family = identifyModelFamily(model, config.models);
       if (family) {
         counts[family] = (counts[family] || 0) + 1;
       }
