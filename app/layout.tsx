@@ -145,7 +145,12 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <SerwistProvider swUrl="/serwist/sw.js">{children}</SerwistProvider>
+        <SerwistProvider
+          swUrl="/web-llm-chat/serwist/sw.js"
+          options={{ scope: "/web-llm-chat/" }}
+        >
+          {children}
+        </SerwistProvider>
       </body>
     </html>
   );
