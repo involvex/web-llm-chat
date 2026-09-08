@@ -23,6 +23,7 @@ const cspHeader = `
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  basePath: "/web-llm-chat",
   output: mode,
   images: {
     unoptimized: mode === "export",
