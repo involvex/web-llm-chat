@@ -9,7 +9,7 @@ import React, { useRef, useState, RefObject, useEffect, useMemo } from "react";
 import { copyToClipboard } from "../utils";
 import mermaid from "mermaid";
 
-import LoadingIcon from "../icons/three-dots.svg";
+import { LoadingIcon as ThreeDotsIcon } from "../icons";
 import { useDebouncedCallback } from "use-debounce";
 import { showImageModal } from "./ui-lib";
 import type { PluggableList } from "unified";
@@ -192,7 +192,7 @@ export function Markdown(
       dir="auto"
     >
       {props.loading ? (
-        <LoadingIcon />
+        <ThreeDotsIcon />
       ) : (
         <MarkdownContent content={props.content} />
       )}

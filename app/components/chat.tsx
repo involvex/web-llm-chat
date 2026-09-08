@@ -10,28 +10,29 @@ import React, {
   useContext,
 } from "react";
 
-import ShareIcon from "../icons/share.svg";
-import SendWhiteIcon from "../icons/send-white.svg";
-import RenameIcon from "../icons/rename.svg";
-import ExportIcon from "../icons/export.svg";
-import ReturnIcon from "../icons/return.svg";
-import CopyIcon from "../icons/copy.svg";
-import LoadingIcon from "../icons/three-dots.svg";
-import LoadingButtonIcon from "../icons/loading.svg";
-import PromptIcon from "../icons/prompt.svg";
-import MaxIcon from "../icons/max.svg";
-import MinIcon from "../icons/min.svg";
-import ResetIcon from "../icons/reload.svg";
-import BreakIcon from "../icons/break.svg";
-import DeleteIcon from "../icons/clear.svg";
-import EditIcon from "../icons/rename.svg";
-import ConfirmIcon from "../icons/confirm.svg";
-import ImageIcon from "../icons/image.svg";
-import BrainIcon from "../icons/brain.svg";
-
-import BottomIcon from "../icons/bottom.svg";
-import StopIcon from "../icons/pause.svg";
-import RobotIcon from "../icons/robot.svg";
+import {
+  ShareIcon,
+  SendWhiteIcon,
+  RenameIcon,
+  ExportIcon,
+  ReturnIcon,
+  CopyIcon,
+  LoadingIcon,
+  LoadingButtonIcon,
+  PromptIcon,
+  MaxIcon,
+  MinIcon,
+  ResetIcon,
+  BreakIcon,
+  DeleteIcon,
+  EditIcon,
+  ConfirmIcon,
+  ImageIcon,
+  BrainIcon,
+  BottomIcon,
+  StopIcon,
+  RobotIcon,
+} from "../icons";
 
 import {
   ChatMessage,

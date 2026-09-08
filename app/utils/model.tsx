@@ -1,10 +1,12 @@
 import React from "react";
-import MetaIcon from "@/app/icons/meta.svg";
-import MicrosoftIcon from "@/app/icons/microsoft.svg";
-import MistralIcon from "@/app/icons/mistral.svg";
-import GoogleIcon from "@/app/icons/google.svg";
-import StablelmIcon from "@/app/icons/stablelm.svg";
-import DeepSeekIcon from "@/app/icons/deepseek.svg";
+import {
+  MetaIcon,
+  MicrosoftIcon,
+  MistralIcon,
+  GoogleIcon,
+  StablelmIcon,
+  DeepSeekIcon,
+} from "@/app/icons";
 import { ModelRecord } from "../client/api";
 import { ModelFamily } from "../constant";
 import { Shirt, WandSparkles } from "lucide-react";
@@ -67,7 +69,7 @@ export function collectModels(
 export interface ModelDetails {
   family: ModelFamily;
   name: string;
-  icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  icon?: React.ComponentType<any>;
 }
 
 export const modelDetailsList: ModelDetails[] = [

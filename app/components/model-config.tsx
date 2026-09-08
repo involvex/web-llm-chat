@@ -6,9 +6,7 @@ import {
   Model,
 } from "../store";
 
-import CancelIcon from "../icons/cancel.svg";
-import ConfirmIcon from "../icons/confirm.svg";
-import ConnectIcon from "../icons/connection.svg";
+import { CancelIcon, ConfirmIcon, ConnectIcon } from "../icons";
 
 import Locale from "../locales";
 import { InputRange } from "./input-range";

@@ -3,17 +3,19 @@ import { useEffect, useRef, useMemo } from "react";
 import styles from "./home.module.scss";
 
 import { IconButton } from "./button";
-import SettingsIcon from "../icons/gear.svg";
-import GithubIcon from "../icons/github.svg";
-import InternetIcon from "../icons/internet.svg";
-import MlcIcon from "../icons/mlc.svg";
-import AddIcon from "../icons/add.svg";
-import DeleteIcon from "../icons/delete.svg";
-import TemplateIcon from "../icons/chat.svg";
-import DragIcon from "../icons/drag.svg";
-import LightIcon from "../icons/light.svg";
-import DarkIcon from "../icons/dark.svg";
-import AutoIcon from "../icons/auto.svg";
+import {
+  SettingsIcon,
+  GithubIcon,
+  InternetIcon,
+  MlcIcon,
+  AddIcon,
+  DeleteIcon,
+  TemplateIcon,
+  DragIcon,
+  LightIcon,
+  DarkIcon,
+  AutoIcon,
+} from "../icons";
 
 import Locale from "../locales";
 

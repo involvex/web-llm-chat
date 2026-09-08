@@ -27,7 +27,7 @@ export interface ModelSearchProps {
 const modelFamilies: {
   [key: string]: {
     name: string;
-    icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+    icon?: React.ComponentType<any>;
   };
 } = {};
 

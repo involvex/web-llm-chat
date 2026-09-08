@@ -2,12 +2,14 @@ import { useState, useEffect, useContext, useMemo } from "react";
 import log from "loglevel";
 
 import styles from "./settings.module.scss";
-import AddIcon from "../icons/add.svg";
-import CloseIcon from "../icons/close.svg";
-import CopyIcon from "../icons/copy.svg";
-import ClearIcon from "../icons/clear.svg";
-import EditIcon from "../icons/edit.svg";
-import EyeIcon from "../icons/eye.svg";
+import {
+  AddIcon,
+  CloseIcon,
+  CopyIcon,
+  ClearIcon,
+  EditIcon,
+  EyeIcon,
+} from "../icons";
 
 import { Input, List, ListItem, Modal, Select, showConfirm } from "./ui-lib";
 import { ModelConfigList } from "./model-config";

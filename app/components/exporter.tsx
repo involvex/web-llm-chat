@@ -19,13 +19,13 @@ import {
   useMobileScreen,
 } from "../utils";
 
-import CopyIcon from "../icons/copy.svg";
-import LoadingIcon from "../icons/three-dots.svg";
-import ShareIcon from "../icons/share.svg";
-import MlcIcon from "../icons/mlc.svg";
-import MlcIconPng from "../icons/mlc.png";
-
-import DownloadIcon from "../icons/download.svg";
+import {
+  CopyIcon,
+  LoadingIcon as ThreeDotsIcon,
+  ShareIcon,
+  MlcIcon,
+  DownloadIcon,
+} from "../icons";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { MessageSelector, useMessageSelector } from "./message-selector";
 import { Avatar } from "./emoji";
@@ -41,7 +41,7 @@ import { getClientConfig } from "../config/client";
 import { getMessageTextContent } from "../utils";
 
 const Markdown = dynamic(async () => (await import("./markdown")).Markdown, {
-  loading: () => <LoadingIcon />,
+  loading: () => <ThreeDotsIcon />,
 });
 
 export function ExportMessageModal(props: { onClose: () => void }) {
@@ -290,7 +290,7 @@ export function PreviewActions(props: {
           text={Locale.Export.Share}
           bordered
           shadow
-          icon={loading ? <LoadingIcon /> : <ShareIcon />}
+          icon={loading ? <ThreeDotsIcon /> : <ShareIcon />}
           onClick={share}
         ></IconButton>
       </div>

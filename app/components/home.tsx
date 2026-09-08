@@ -10,8 +10,7 @@ import { useState, useEffect, useRef } from "react";
 import { usePathname } from "../router";
 import { ServiceWorkerMLCEngine } from "@mlc-ai/web-llm";
 
-import MlcIcon from "../icons/mlc.svg";
-import LoadingIcon from "../icons/three-dots.svg";
+import { MlcIcon, LoadingIcon as ThreeDotsIcon } from "../icons";
 
 import Locale from "../locales";
 import { getCSSVar, useMobileScreen } from "../utils";
@@ -33,7 +32,7 @@ export function Loading(props: { noLogo?: boolean }) {
           <MlcIcon />
         </div>
       )}
-      <LoadingIcon />
+      <ThreeDotsIcon />
     </div>
   );
 }

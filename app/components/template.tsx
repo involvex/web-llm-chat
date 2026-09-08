@@ -3,16 +3,18 @@ import { ErrorBoundary } from "./error";
 
 import styles from "./template.module.scss";
 
-import ConfirmIcon from "../icons/confirm.svg";
-import DownloadIcon from "../icons/download.svg";
-import UploadIcon from "../icons/upload.svg";
-import EditIcon from "../icons/edit.svg";
-import AddIcon from "../icons/add.svg";
-import CloseIcon from "../icons/close.svg";
-import DeleteIcon from "../icons/delete.svg";
-import EyeIcon from "../icons/eye.svg";
-import CopyIcon from "../icons/copy.svg";
-import DragIcon from "../icons/drag.svg";
+import {
+  ConfirmIcon,
+  DownloadIcon,
+  UploadIcon,
+  EditIcon,
+  AddIcon,
+  CloseIcon,
+  DeleteIcon,
+  EyeIcon,
+  CopyIcon,
+  DragIcon,
+} from "../icons";
 
 import {
   DEFAULT_TEMPLATE_AVATAR,

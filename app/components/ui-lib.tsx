@@ -1,14 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 import styles from "./ui-lib.module.scss";
-import LoadingIcon from "../icons/three-dots.svg";
-import CloseIcon from "../icons/close.svg";
-import EyeIcon from "../icons/eye.svg";
-import EyeOffIcon from "../icons/eye-off.svg";
-import DownIcon from "../icons/down.svg";
-import ConfirmIcon from "../icons/confirm.svg";
-import CancelIcon from "../icons/cancel.svg";
-import MaxIcon from "../icons/max.svg";
-import MinIcon from "../icons/min.svg";
+import {
+  LoadingIcon as ThreeDotsIcon,
+  CloseIcon,
+  EyeIcon,
+  EyeOffIcon,
+  DownIcon,
+  ConfirmIcon,
+  CancelIcon,
+  MaxIcon,
+  MinIcon,
+} from "../icons";
 
 import Locale from "../locales";
 
@@ -129,7 +131,7 @@ export function Loading() {
         justifyContent: "center",
       }}
     >
-      <LoadingIcon />
+      <ThreeDotsIcon />
     </div>
   );
 }
