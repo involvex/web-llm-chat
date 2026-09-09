@@ -131,14 +131,13 @@ export class WebLLMApi implements LLMApi {
       }
       console.error("Error in chatCompletion", errorMessage);
       if (
-        errorMessage.includes("WebGPU") &&
-        errorMessage.includes("compatibility chart")
+        errorMessage.includes("WebGPU") ||
+        errorMessage.includes("compatible GPU")
       ) {
-        // Add WebGPU compatibility chart link
-        errorMessage = errorMessage.replace(
-          "compatibility chart",
-          "[compatibility chart](https://caniuse.com/webgpu)",
-        );
+        errorMessage =
+          "WebGPU is required but not available on this device/browser. " +
+          "Please try Chrome/Edge 113+ on a device with WebGPU support. " +
+          "Check compatibility at [caniuse.com/webgpu](https://caniuse.com/webgpu).";
       }
       options.onError?.(errorMessage);
       return;

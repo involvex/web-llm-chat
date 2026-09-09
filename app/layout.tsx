@@ -10,6 +10,7 @@ export const viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
+  userScalable: false,
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#fafafa" },
     { media: "(prefers-color-scheme: dark)", color: "#151515" },
@@ -18,7 +19,10 @@ export const viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://chat.webllm.ai"),
-  title: "WebLLM Chat",
+  title: {
+    default: "WebLLM Chat",
+    template: "%s | WebLLM Chat",
+  },
   description:
     "Chat with AI large language models running natively in your browser. Enjoy private, server-free, seamless AI conversations.",
   keywords: [
@@ -35,7 +39,12 @@ export const metadata: Metadata = {
   robots: "index, follow",
   appleWebApp: {
     title: "WebLLM Chat",
+    capable: true,
     statusBarStyle: "default",
+  },
+  applicationName: "WebLLM Chat",
+  formatDetection: {
+    telephone: false,
   },
   openGraph: {
     type: "website",
@@ -95,8 +104,17 @@ export default function RootLayout({
         <meta name="config" content={JSON.stringify(getClientConfig())} />
         <meta name="referrer" content="strict-origin-when-cross-origin" />
         <meta
+          name="description"
+          content="Chat with AI large language models running natively in your browser."
+        />
+        <meta name="theme-color" content="#062578" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="WebLLM Chat" />
+        <meta
           name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
         />
         <link
           rel="apple-touch-icon"
@@ -118,7 +136,7 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#062578" />
         <meta name="msapplication-TileColor" content="#2b5797" />
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="msapplication-config" content="/browserconfig.xml" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

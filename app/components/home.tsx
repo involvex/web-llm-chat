@@ -158,6 +158,7 @@ const useWebLLM = () => {
   const config = useAppConfig();
   const [webllm, setWebLLM] = useState<WebLLMApi | undefined>(undefined);
   const [isWebllmActive, setWebllmAlive] = useState(false);
+  const [initError, setInitError] = useState<string | undefined>(undefined);
 
   const isWebllmInitialized = useRef(false);
   const webllmRef = useRef(webllm);
@@ -198,6 +199,12 @@ const useWebLLM = () => {
   // Initialize WebLLM engine
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
+    if (!navigator.gpu) {
+      setInitError(
+        "WebGPU is not supported in this browser. Please use Chrome or Edge on a device with WebGPU-capable GPU. Check https://caniuse.com/webgpu for compatibility.",
+      );
+      return;
+    }
     if ("serviceWorker" in navigator) {
       log.info("Service Worker API is available and in use.");
       navigator.serviceWorker.ready.then(() => {
@@ -269,7 +276,7 @@ const useWebLLM = () => {
       }
     }, 10_000);
   }
-  return { webllm, isWebllmActive };
+  return { webllm, isWebllmActive, initError };
 };
 
 const useMlcLLM = () => {
@@ -357,7 +364,7 @@ const useModels = (mlcllm: MlcLLMApi | undefined) => {
 
 export function Home() {
   const hasHydrated = useHasHydrated();
-  const { webllm, isWebllmActive } = useWebLLM();
+  const { webllm, isWebllmActive, initError } = useWebLLM();
   const mlcllm = useMlcLLM();
 
   useSwitchTheme();
@@ -366,6 +373,10 @@ export function Home() {
   useStopStreamingMessages();
   useModels(mlcllm);
   useLogLevel(webllm);
+
+  if (initError) {
+    return <ErrorScreen message={initError} />;
+  }
 
   if (!hasHydrated || !webllm || !isWebllmActive) {
     return <Loading />;

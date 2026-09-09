@@ -1,6 +1,13 @@
 {
   "name": "WebLLM Chat",
-  "short_name": "WebLLMChat",
+  "short_name": "WebLLM Chat",
+  "description": "Chat with AI large language models running natively in your browser.",
+  "start_url": "/web-llm-chat/",
+  "scope": "/web-llm-chat/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#fafafa",
+  "theme_color": "#062578",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
@@ -11,11 +18,12 @@
       "src": "/android-chrome-384x384.png",
       "sizes": "384x384",
       "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "apple touch icon"
     }
-  ],
-  "start_url": "/",
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
-  "display": "standalone",
-  "orientation": "portrait"
+  ]
 }
